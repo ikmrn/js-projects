@@ -6,14 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Passenger Counter</title>
   <link rel="stylesheet" href="css/styles.css">
+  <script src="js/index.js" defer></script>
 </head>
 
 <body>
+  <h1 id="welcome-el"></h1>
   <h1>People entered:</h1>
-  <h2 id="count-el">0</h2>
-  <script>
-    document.getElementById("count-el").innerText = 5
-  </script>
+  <h2 id="count">0</h2>
+  <button id="increment-btn">INCREMENT</button>
+  <button id="save-btn">SAVE</button>
+  <button id="reset-btn">RESET</button>
+  <div class="container"></div>
 </body>
 
 </html>
