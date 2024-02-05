@@ -28,9 +28,11 @@ body {
 }
 
 button {
+  display: block;
+  margin: 0.5rem auto;
   background-color: var(--highlight-color);
   color: #016f32;
-  min-width: 100px;
+  width: 250px;
   font-size: 1.5rem;
   font-weight: 600;
   padding: 0.5rem 1.5rem;
