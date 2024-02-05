@@ -29,6 +29,7 @@ body {
 
 button {
   display: block;
+  border: none;
   margin: 0.5rem auto;
   background-color: var(--highlight-color);
   color: #016f32;
