@@ -1,10 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Initialize variables
-  let firstCard = getRandomCard();
-  let secondCard = getRandomCard();
-  let sum = firstCard + secondCard;
+  let sum = 0;
   let hasBlackjack = false;
-  let isAlive = true;
+  let isAlive = false;
+  let player = {
+    name: "Kamran",
+    chips: 145,
+  };
 
   let message = "";
 
@@ -15,9 +17,21 @@ document.addEventListener("DOMContentLoaded", function () {
   let sumEl = document.getElementById("sum-el");
   let cardsEl = document.getElementById("cards-el");
 
-  let cards = [firstCard, secondCard];
+  let playerEl = document.getElementById("player-id");
+  playerEl.textContent = `${player.name}: $${player.chips}`;
 
   // Function to start the game
+  function startGame() {
+    isAlive = true;
+    let firstCard = getRandomCard();
+    let secondCard = getRandomCard();
+    cards = [firstCard, secondCard];
+    sum = firstCard + secondCard;
+
+    renderGame();
+  }
+
+  // Function to render the game
   function renderGame() {
     cardsEl.textContent = "Cards: ";
     for (let i = 0, n = cards.length; i < n; i++) {
@@ -41,10 +55,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function to draw a new card
   function newCard() {
-    let card = getRandomCard();
-    sum += card;
-    cards.push(card);
-    renderGame();
+    if (isAlive && !hasBlackjack) {
+      let card = getRandomCard();
+      sum += card;
+      cards.push(card);
+      renderGame();
+    }
   }
 
   function getRandomCard() {
@@ -59,6 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Add an event listener to the buttons
-  startBtn.addEventListener("click", renderGame);
+  startBtn.addEventListener("click", startGame);
   newCardBtn.addEventListener("click", newCard);
 });
