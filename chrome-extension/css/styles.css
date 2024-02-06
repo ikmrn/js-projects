@@ -28,6 +28,16 @@ button {
   border: solid 1px #5f9341;
   color: #5f9341;
 }
+button:hover {
+  transform: scale(1.1);
+  transition: transform 0.5s;
+}
+/* #delete-btn:hover {
+  color: red;
+  transition: color 0.5s;
+  transform: scale(1.1);
+  transition: transform 0.5s;
+} */
 
 ul {
   margin: 1rem;
