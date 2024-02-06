@@ -3,23 +3,26 @@ document.addEventListener("DOMContentLoaded", function () {
   const inputEl = document.getElementById("input-el");
   const inputBtn = document.getElementById("input-btn");
   const ulEl = document.getElementById("ul-el");
+  const deleteBtn = document.getElementById("delete-btn");
+  const tabBtn = document.getElementById("tab-btn");
 
   // Retrieve leads from local storage
   let myLeads = JSON.parse(localStorage.getItem("myLeads")) || [];
+  render(myLeads);
 
-  function saveLead() {
-    myLeads.push(inputEl.value);
+  function save(value) {
+    myLeads.push(value);
     inputEl.value = "";
     localStorage.setItem("myLeads", JSON.stringify(myLeads));
-    renderLeads();
+    render(myLeads);
   }
 
-  function renderLeads() {
+  function render(leads) {
     let listItems = "";
-    myLeads.forEach((element) => {
+    leads.forEach((element) => {
       listItems += `
         <li>
-          <a href="${element}" target="_blank">
+          <a href="${element}" target="blank">
             ${element}
           </a>
         </li>`;
@@ -27,14 +30,30 @@ document.addEventListener("DOMContentLoaded", function () {
     ulEl.innerHTML = listItems;
   }
 
-  inputBtn.addEventListener("click", saveLead);
+  // Event listeners
+  // Save input
+  inputBtn.addEventListener("click", function () {
+    save(inputEl.value);
+  });
+
   inputEl.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
-      saveLead();
+      save(inputEl.value);
     }
   });
-  
 
-  // Initial rendering of leads
-  renderLeads();
+  // Save Tabs
+  tabBtn.addEventListener("click", function () {
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+      console.log(tabs[0]);
+      save(tabs[0].url);
+    });
+  });
+
+  // Delete Tabs
+  deleteBtn.addEventListener("dblclick", function () {
+    localStorage.clear();
+    myLeads = [];
+    render(myLeads);
+  });
 });
