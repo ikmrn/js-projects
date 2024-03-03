@@ -116,6 +116,60 @@ function createProductElement(product) {
     <strong>$${product.price.toLocaleString()}</strong>
   `;
 
+  productElement.querySelector(".status").addEventListener("click", updateCart);
 
   return productElement;
+}
+
+/* Add or remove cart */
+function updateCart(e) {
+  const statusEl = e.target;
+
+  if (statusEl.classList.contains("added")) {
+    // Remove from cart
+    statusEl.classList.remove("added");
+    statusEl.textContent = "Add To Cart";
+    statusEl.classList.remove("bg-red-600");
+    statusEl.classList.add("bg-gray-800");
+    cartItemCount--;
+  } else {
+    // Add to cart
+    statusEl.classList.add("added");
+    statusEl.textContent = "Remove From Cart";
+    statusEl.classList.remove("bg-gray-800");
+    statusEl.classList.add("bg-red-600");
+    cartItemCount++;
+  }
+
+  // Update cart item count
+  cartCount.textContent = cartItemCount.toString();
+}
+
+// Filter products by checkboxes and search input
+function filterProducts() {
+  // Get search term
+  const searchTerm = searchInput.value.trim().toLowerCase();
+
+  // Get checked category
+  const checkedCategories = Array.from(checkboxes)
+    .filter((check) => check.checked)
+    .map((check) => check.id);
+
+  // Loop over products and check for matches
+  console.log(productElements);
+  productElements.forEach((productElement, index) => {
+    const product = products[index];
+
+    // Check if products matches the search term or the checked categories
+    const matchesSearchTerm = product.name.toLowerCase().includes(searchTerm);
+    const isInCheckedCategory =
+      checkedCategories.length === 0 ||
+      checkedCategories.includes(product.category);
+
+    if (matchesSearchTerm && isInCheckedCategory) {
+      productElement.classList.remove("hidden");
+    } else {
+      productElement.classList.add("hidden");
+    }
+  });
 }
