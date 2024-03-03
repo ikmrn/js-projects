@@ -85,3 +85,37 @@ let cartItemCount = 0;
 // Init product element array
 const productElements = [];
 
+// Event listeners for filtering
+filterContainer.addEventListener("change", filterProducts);
+searchInput.addEventListener("change", filterProducts);
+
+// Loop over products and create element
+products.forEach((product) => {
+  const productElement = createProductElement(product);
+
+  productElements.push(productElement);
+  productsWrapper.appendChild(productElement);
+});
+
+/* Create product element */
+function createProductElement(product) {
+  const productElement = document.createElement("div");
+
+  productElement.className = "item space-y2";
+  productElement.innerHTML = `
+    <div class="bg-gray-100 flex justify-center relative overflow-hidden group cursor-pointer border rounded-xl">
+      <img src="${product.url}" alt="${
+    product.name
+  }" class="w-full h-full object-cover">
+      <button
+        class="status bg-black text-white absolute bottom-0 left-0 right-0 text-center py-2 translate-y-full transition group-hover:translate-y-0">
+        Add To Cart
+      </button>
+    </div>
+    <p class="text-xl">${product.name}</p>
+    <strong>$${product.price.toLocaleString()}</strong>
+  `;
+
+
+  return productElement;
+}
